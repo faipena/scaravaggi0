@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    build: ./app
     restart: always
     volumes:
       - gz_data:/deno-dir/location_data
