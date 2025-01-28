@@ -11,7 +11,7 @@ export default function Home() {
         />
         <h1 class="font-godzilla md:text-7xl font-bold text-6xl">GodzillaZ</h1>
         <p class="my-4">
-          <code>Coming soon...</code>
+          <code>Coming Soon... <span class="text-xs text-purple-700">Zuzzurelloni</span></code>
         </p>
       </div>
     </div>
