@@ -1,0 +1,32 @@
+services:
+  app:
+    build: .
+    restart: always
+    volumes:
+      - gz_data:/deno-dir/location_data
+    expose:
+      - 8000
+    networks:
+      - web
+
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - web
+
+networks:
+  web:
+    driver: bridge
+
+volumes:
+  gz_data:
+  caddy_data:
+  caddy_config:
