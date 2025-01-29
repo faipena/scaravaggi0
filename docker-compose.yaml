@@ -2,12 +2,10 @@ services:
   app:
     build: ./app
     restart: always
-    volumes:
-      - gz_data:/deno-dir/location_data
     expose:
       - 8000
     networks:
-      - web
+      - internal
 
   caddy:
     image: caddy:latest
@@ -20,11 +18,13 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     networks:
-      - web
+      - default
+      - internal
 
 networks:
-  web:
-    driver: bridge
+  default:
+  internal:
+    internal: true
 
 volumes:
   gz_data:
