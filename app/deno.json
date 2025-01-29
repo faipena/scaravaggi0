@@ -7,7 +7,8 @@
     "start": "deno run -A --watch=static/,routes/ dev.ts",
     "build": "deno run -A dev.ts build",
     "preview": "deno run -A main.ts",
-    "update": "deno run -A -r https://fresh.deno.dev/update ."
+    "update": "deno run -A -r https://fresh.deno.dev/update .",
+    "prod": "deno --allow-read=. --allow-env='DENO_IP,DENO_PORT,DENO_DEPLOYMENT_ID,GITHUB_SHA,JSR_URL,__FRSH_LEGACY_DEV,PORT' --allow-net main.ts"
   },
   "lint": {
     "rules": {

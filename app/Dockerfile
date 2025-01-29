@@ -8,4 +8,4 @@ COPY --chown=deno:deno . /app
 WORKDIR /app
 USER deno:deno
 RUN deno task build && deno cache main.ts
-CMD ["deno", "-A", "main.ts"]
+CMD ["deno", "task", "prod"]
