@@ -9,14 +9,14 @@ services:
       - internal
 
   caddy:
-    image: caddy:latest
+    build: ./caddy
     restart: always
     env_file: .env.caddy
     ports:
       - 80:80
       - 443:443
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
     networks:
