@@ -6,3 +6,7 @@ RUN xcaddy build \
 FROM caddy:2.9.1
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
+
+COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+
+CMD ["/usr/local/bin/entrypoint.sh"]
