@@ -36,5 +36,5 @@ TW_CL13NT_S3CR3T=YOUR TWITCH CLIENT SECRET
 - Avvia il bot nel container:
 
 ```bash
-docker run --env-file .env -it --rm godzillaz-bot
+docker run --env-file .env.bot -it --rm godzillaz-bot
 ```
