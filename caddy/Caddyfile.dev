@@ -1,3 +1,7 @@
 localhost {
     reverse_proxy app:8000
 }
+
+bot.localhost {
+    reverse_proxy bot:8000
+}

@@ -24,7 +24,7 @@ della live.
 docker build . -t godzillaz-bot:latest
 ```
 
-- Crea un file `.env` contenente le seguenti variabili:
+- Crea un file `.env.bot` contenente le seguenti variabili:
 
 ```bash
 TG_T0K3N=YOUR TELEGRAM TOKEN

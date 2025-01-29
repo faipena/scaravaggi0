@@ -2,11 +2,16 @@ services:
   app:
     build: ./app
     restart: always
-    env_file: .env
+    env_file: .env.app
     expose:
       - 8000
     networks:
       - internal
+
+  bot:
+    build: ./bot
+    restart: always
+    env_file: .env.bot
 
   caddy:
     build: ./caddy
