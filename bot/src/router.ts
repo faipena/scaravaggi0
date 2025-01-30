@@ -1,8 +1,10 @@
+export type RequestInfo = Deno.ServeHandlerInfo<Deno.NetAddr>;
+
 export interface HandlerFunction {
   (
     request: Request,
-    info: Deno.ServeHandlerInfo<Deno.NetAddr>,
-  ): Response | Promise<Response>;
+    info: RequestInfo,
+  ): Response | Promise<Response> | undefined;
 }
 
 export interface RequestHandler {
@@ -50,13 +52,14 @@ export default class Router {
 
   listen(): Deno.HttpServer {
     return Deno.serve(this.#options, (
-      _req: Request,
-      info: Deno.ServeHandlerInfo<Deno.NetAddr>,
-    ): Response | Promise<Response> => {
+      request: Request,
+      info: RequestInfo
+    ) => {
       let result: Response | Promise<Response> | undefined;
       this.#handlers.forEach((handler) => {
-        if (_req.method === handler.method && _req.url.match(handler.path)) {
-          result = handler.handle(_req, info);
+        const url = new URL(request.url);
+        if (request.method === handler.method && url.pathname.match(handler.path)) {
+          result = handler.handle(request, info);
         }
       });
       return result ?? this.defaultResponse();
