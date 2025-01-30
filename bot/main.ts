@@ -61,8 +61,8 @@ if (import.meta.main) {
     }
 
     const TELEGRAM_GROUP_ID: number = +TELEGRAM_GROUP;
-    // TODO: use WebHooks
     // TODO: handle telegram updates
+    const router = new Router();
     const telegram = new Telegram(TELEGRAM_TOKEN);
     const twitch = new Twitch(
       TWITCH_CHANNEL,
@@ -81,16 +81,8 @@ if (import.meta.main) {
 
     Deno.addSignalListener("SIGINT", () => {
       console.log("Caught SIGINT. Exiting gracefully...");
+      router.stopListening();
       Deno.exit(0);
-    });
-
-    const router = new Router();
-    router.add({
-      method: "GET",
-      path: "",
-      handle(request: Request, info: any): Response | Promise<Response> {
-        return new Response("test", { status: 200 });
-      },
     });
 
     router.listen();

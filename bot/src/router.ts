@@ -17,6 +17,7 @@ export default class Router {
   #options:
     | Deno.ServeTcpOptions
     | (Deno.ServeTcpOptions & Deno.TlsCertifiedKeyPem);
+  defaultResponse(): Response {return new Response("Not found", {status: 404})};
 
   constructor(
     options?:
@@ -50,13 +51,13 @@ export default class Router {
       _req: Request,
       info: Deno.ServeHandlerInfo<Deno.NetAddr>,
     ): Response | Promise<Response> => {
-      let result: Response | Promise<Response> = new Response();
+      let result: Response | Promise<Response> | undefined;
       this.#handlers.forEach((handler) => {
-        if (_req.method == handler.method, _req.url.match(handler.path)) {
+        if (_req.method === handler.method && _req.url.match(handler.path)) {
           result = handler.handle(_req, info);
         }
       });
-      return result;
+      return result ?? this.defaultResponse();
     });
   }
 
