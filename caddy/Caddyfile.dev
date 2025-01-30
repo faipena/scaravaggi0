@@ -1,7 +1,13 @@
+{
+	log {
+		format console
+	}
+}
+
 localhost {
-    reverse_proxy app:8000
+	reverse_proxy app:8000
 }
 
 bot.localhost {
-    reverse_proxy bot:8000
+	reverse_proxy bot:8000
 }

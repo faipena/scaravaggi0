@@ -1,3 +1,9 @@
+{
+	log {
+		format console
+	}
+}
+
 godzillaz.top {
 	reverse_proxy app:8000
 	tls {
