@@ -1,4 +1,5 @@
 import db from "./src/db.ts";
+import Router from "./src/router.ts";
 import Telegram from "./src/telegram/telegram.ts";
 import Twitch from "./src/twitch/twitch.ts";
 
@@ -82,6 +83,17 @@ if (import.meta.main) {
       console.log("Caught SIGINT. Exiting gracefully...");
       Deno.exit(0);
     });
+
+    const router = new Router();
+    router.add({
+      method: "GET",
+      path: "",
+      handle(request: Request, info: any): Response | Promise<Response> {
+        return new Response("test", { status: 200 });
+      },
+    });
+
+    router.listen();
 
     setInterval(() => {}, 1000);
   } catch (_error) {

@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "start": "deno run --env-file=../.env.bot --allow-net --allow-env --watch=src/ main.ts",
+    "start": "deno run --env-file=../.env.bot.local --allow-net --allow-env --watch=src/ main.ts",
     "prod": "deno run --allow-net --allow-env --allow-read=/data/ --allow-write=/data/ main.ts"
   },
   "unstable": ["kv", "temporal"]
