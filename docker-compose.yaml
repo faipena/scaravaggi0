@@ -12,6 +12,8 @@ services:
     build: ./bot
     restart: always
     env_file: .env.bot
+    volumes:
+      - bot_data:/data
 
   caddy:
     build: ./caddy
@@ -35,6 +37,7 @@ networks:
     internal: true
 
 volumes:
-  gz_data:
+  app_data:
+  bot_data:
   caddy_data:
   caddy_config:

@@ -1,9 +1,11 @@
 FROM denoland/deno:2.1.7
 
+VOLUME [ "/data" ]
 WORKDIR /app
-COPY src ./src
-COPY deno.json main.ts ./
+COPY . /app
+
+RUN install -d -m 770 -o root -g deno /location_data
 
 USER deno:deno
 
-CMD ["run", "--allow-net", "--allow-env", "--unstable-kv", "--unstable-temporal", "main.ts"]
+CMD ["deno", "task", "prod"]
