@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        godzilla: ['Godzilla', "sans-serif"]
-      }
-    }
-  }
+        godzilla: ["Godzilla", "sans-serif"],
+      },
+    },
+  },
 } satisfies Config;

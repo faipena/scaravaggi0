@@ -17,7 +17,9 @@ export default class Router {
   #options:
     | Deno.ServeTcpOptions
     | (Deno.ServeTcpOptions & Deno.TlsCertifiedKeyPem);
-  defaultResponse(): Response {return new Response("Not found", {status: 404})};
+  defaultResponse(): Response {
+    return new Response("Not found", { status: 404 });
+  }
 
   constructor(
     options?:

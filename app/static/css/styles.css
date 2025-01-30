@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: "Godzilla";
-    src: url("/fonts/Godzilla.ttf");
-  }
+  font-family: "Godzilla";
+  src: url("/fonts/Godzilla.ttf");
+}
