@@ -1,6 +1,8 @@
 import {
   TwitchCredentials,
+  TwitchRequestCreateEventSub,
   TwitchRequestStreams,
+  TwitchResponseCreateEventSub,
   TwitchResponsePaginated,
   TwitchResponseStreams,
 } from "./types.ts";
@@ -99,5 +101,12 @@ export default class TwitchAPI {
       urlParams: new URLSearchParams(params as Record<string, any>),
     });
     return response.data as TwitchResponseStreams[];
+  }
+
+  async createEventSub(params?: TwitchRequestCreateEventSub): Promise<TwitchResponseCreateEventSub> {
+    return await this.http({
+      path: "eventsub/subscriptions",
+      body: new URLSearchParams(params as Record<string, any>),
+    })
   }
 }

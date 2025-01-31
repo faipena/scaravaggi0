@@ -40,3 +40,39 @@ export interface TwitchResponseStreams {
   tag_ids?: string[];
   is_mature: boolean;
 }
+
+export interface TwitchRequestCreateEventSub {
+  type: string,
+  version: string,
+  condition: object,
+  transport:  {
+    method: "webhook" | "websocket" | "conduit",
+    callback?: string,
+    secret?: string,
+    session_id?: string,
+    conduit_id?: string,
+  }
+}
+
+export interface TwitchResponseCreateEventSub {
+  data: {
+    id: string,
+    status: "enabled" | "webhook_callback_verification_pending",
+    type: string,
+    version: string,
+    condition: object,
+    created_at: string,
+    transport: {
+      method: "webhook" | "websocket" | "conduit",
+      callback?: string,
+      secret?: string,
+      session_id?: string,
+      connected_at?: string,
+      conduit_id?: string,
+    },
+    cost: number,
+  },
+  total: number,
+  total_cost: number,
+  max_total_cost: number,
+}
