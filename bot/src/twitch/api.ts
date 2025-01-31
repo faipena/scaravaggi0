@@ -8,6 +8,20 @@ import {
 const API_ID_URL = "https://id.twitch.tv";
 const API_HELIX_URL = "https://api.twitch.tv/helix";
 
+export enum TwitchAPIEndpoint {
+  Auth = API_ID_URL,
+  Helix = API_HELIX_URL,
+}
+
+type TwitchAPIRequestOptions = {
+  path: string;
+  body?: object;
+  urlParams?: URLSearchParams;
+  headers?: Headers;
+  endpoint?: TwitchAPIEndpoint;
+  authenticated?: boolean;
+};
+
 export default class TwitchAPI {
   readonly #id;
   readonly #secret;
@@ -22,38 +36,37 @@ export default class TwitchAPI {
     this.#secret = secret;
   }
 
-  // deno-lint-ignore no-explicit-any
-  private async http(url: string, params?: object): Promise<any> {
-    const httpMethod = params ? "POST" : "GET";
-    const response = await fetch(`${url}`, {
-      method: httpMethod,
-      headers: params
-        ? new Headers({ "content-type": "application/json" })
-        : undefined,
-      body: params ? JSON.stringify(params) : undefined,
-    });
-    if (!response.ok) {
-      throw Error(
-        `Invalid response from twitch server (HTTP ${response.status}): ${await response
-          .text()}`,
+  private async http(
+    {
+      urlParams = new URLSearchParams(),
+      headers = new Headers(),
+      endpoint = TwitchAPIEndpoint.Helix,
+      authenticated = true,
+      ...options
+    }: TwitchAPIRequestOptions, // deno-lint-ignore no-explicit-any
+  ): Promise<any> {
+    const { path, body } = options;
+    if (body) {
+      headers.set("content-type", "application/json");
+    }
+    if (authenticated && this.#credentials) {
+      headers.append("client-id", `${this.#id}`);
+      headers.append(
+        "authorization",
+        `Bearer ${this.#credentials.access_token}`,
       );
     }
-    return await response.json();
-  }
-
-  // deno-lint-ignore no-explicit-any
-  private async httpGet(url: string, params?: object): Promise<any> {
-    const httpMethod = "GET";
-    const httpParams = params
-      ? new URLSearchParams(params as {})
-      : new URLSearchParams();
-    const response = await fetch(`${url}?${httpParams}`, {
-      method: httpMethod,
-      headers: new Headers({
-        "Client-Id": `${this.#id}`,
-        "Authorization": `Bearer ${this.#credentials?.access_token}`,
-      }),
-    });
+    const httpUrl = `${endpoint}/${path}?${urlParams}`;
+    const httpMethod = body ? "POST" : "GET";
+    const httpBody = body ? JSON.stringify(body) : undefined;
+    const response = await fetch(
+      httpUrl,
+      {
+        method: httpMethod,
+        headers,
+        body: httpBody,
+      },
+    );
     if (!response.ok) {
       throw Error(
         `Invalid response from twitch server (HTTP ${response.status}): ${await response
@@ -64,20 +77,26 @@ export default class TwitchAPI {
   }
 
   async getToken(): Promise<TwitchCredentials> {
-    return await this.http(`${API_ID_URL}/oauth2/token`, {
-      client_id: this.#id,
-      client_secret: this.#secret,
-      grant_type: "client_credentials",
+    return await this.http({
+      path: "oauth2/token",
+      body: {
+        client_id: this.#id,
+        client_secret: this.#secret,
+        grant_type: "client_credentials",
+      },
+      endpoint: TwitchAPIEndpoint.Auth,
+      authenticated: false,
     });
   }
 
   async getStreams(
     params?: TwitchRequestStreams,
   ): Promise<TwitchResponseStreams[]> {
-    const response: TwitchResponsePaginated = await this.httpGet(
-      `${API_HELIX_URL}/streams`,
-      params,
-    );
+    const response: TwitchResponsePaginated = await this.http({
+      path: "streams",
+      // deno-lint-ignore no-explicit-any
+      urlParams: new URLSearchParams(params as Record<string, any>),
+    });
     return response.data as TwitchResponseStreams[];
   }
 }

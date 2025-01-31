@@ -7,13 +7,8 @@ export interface HandlerFunction {
   ): Response | Promise<Response> | undefined;
 }
 
-export enum RequestMethod {
-  GET = "GET",
-  POST = "POST",
-}
-
 export interface RequestHandler {
-  methods: RequestMethod[] | "*";
+  method: "GET" | "POST" | "*";
   path: RegExp | string;
   handle: HandlerFunction;
 }
@@ -48,11 +43,11 @@ export default class Router {
   }
 
   get(path: string | RegExp, handle: HandlerFunction) {
-    this.add({ methods: [RequestMethod.GET], path, handle });
+    this.add({ method: "GET", path, handle });
   }
 
   post(path: string | RegExp, handle: HandlerFunction) {
-    this.add({ methods: [RequestMethod.POST], path, handle });
+    this.add({ method: "POST", path, handle });
   }
 
   listen(): Deno.HttpServer {
@@ -62,8 +57,8 @@ export default class Router {
     ) => {
       let result: Response | Promise<Response> | undefined;
       this.#handlers.forEach((handler) => {
-        const methodMatches = handler.methods === "*" ||
-          handler.methods.some((method) => method === request.method);
+        const methodMatches = handler.method === "*" ||
+          request.method === handler.method;
         const pathMatches = new URL(request.url).pathname.match(handler.path);
         if (methodMatches && pathMatches) {
           result = handler.handle(request, info);
