@@ -15,6 +15,7 @@ export enum TwitchAPIEndpoint {
 
 type TwitchAPIRequestOptions = {
   path: string;
+  method?: "GET" | "POST" | "DELETE",
   body?: object;
   urlParams?: URLSearchParams;
   headers?: Headers;
@@ -45,7 +46,7 @@ export default class TwitchAPI {
       ...options
     }: TwitchAPIRequestOptions, // deno-lint-ignore no-explicit-any
   ): Promise<any> {
-    const { path, body } = options;
+    const { path, body, method } = options;
     if (body) {
       headers.set("content-type", "application/json");
     }
@@ -57,7 +58,7 @@ export default class TwitchAPI {
       );
     }
     const httpUrl = `${endpoint}/${path}?${urlParams}`;
-    const httpMethod = body ? "POST" : "GET";
+    const httpMethod = method ?? (body ? "POST" : "GET");
     const httpBody = body ? JSON.stringify(body) : undefined;
     const response = await fetch(
       httpUrl,
