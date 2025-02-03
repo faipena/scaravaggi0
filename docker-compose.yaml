@@ -2,7 +2,7 @@ services:
   app:
     build: ./app
     restart: always
-    env_file: .env.app
+    env_file: [ .env.app, .env.db ]
     expose:
       - 8000
     networks:
@@ -14,6 +14,16 @@ services:
     env_file: .env.bot
     volumes:
       - bot_data:/data
+
+  db:
+    image: postgres:17.2
+    restart: always
+    shm_size: 512mb
+    env_file: .env.db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - internal
 
   caddy:
     build: ./caddy
@@ -38,6 +48,7 @@ networks:
 
 volumes:
   app_data:
+  db_data:
   bot_data:
   caddy_data:
   caddy_config:
