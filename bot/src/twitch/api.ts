@@ -17,7 +17,7 @@ export enum TwitchAPIEndpoint {
 
 type TwitchAPIRequestOptions = {
   path: string;
-  method?: "GET" | "POST" | "DELETE",
+  method?: "GET" | "POST" | "DELETE";
   body?: object;
   urlParams?: URLSearchParams;
   headers?: Headers;
@@ -103,10 +103,12 @@ export default class TwitchAPI {
     return response.data as TwitchResponseStreams[];
   }
 
-  async createEventSub(params?: TwitchRequestCreateEventSub): Promise<TwitchResponseCreateEventSub> {
+  async createEventSub(
+    params?: TwitchRequestCreateEventSub,
+  ): Promise<TwitchResponseCreateEventSub> {
     return await this.http({
       path: "eventsub/subscriptions",
       body: new URLSearchParams(params as Record<string, any>),
-    })
+    });
   }
 }
