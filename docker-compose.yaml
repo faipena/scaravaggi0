@@ -2,7 +2,7 @@ services:
   app:
     build: ./app
     restart: always
-    env_file: [ .env.app, .env.db ]
+    env_file: [.env.app, .env.db]
     expose:
       - 8000
     networks:
