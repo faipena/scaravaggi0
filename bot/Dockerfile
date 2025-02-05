@@ -4,7 +4,7 @@ VOLUME [ "/data" ]
 WORKDIR /app
 COPY . /app
 
-RUN install -d -m 770 -o root -g deno /location_data
+RUN install -d -m 770 -o root -g deno /data
 
 USER deno:deno
 
