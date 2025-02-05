@@ -9,7 +9,7 @@ export default class Migration0001 extends VirtualDatabaseMigration implements D
   override async apply() {
     await this.db.queryArray`
     CREATE TABLE IF NOT EXISTS users(
-      id integer PRIMARY KEY,
+      id serial PRIMARY KEY,
       email text UNIQUE NOT NULL,
       registration_date timestamp DEFAULT NOW()
     );
@@ -17,12 +17,12 @@ export default class Migration0001 extends VirtualDatabaseMigration implements D
     CREATE SCHEMA IF NOT EXISTS pranks;
 
     CREATE TABLE IF NOT EXISTS pranks.type (
-      id integer PRIMARY KEY,
+      id serial PRIMARY KEY,
       name text UNIQUE NOT NULL
     );
     
     CREATE TABLE IF NOT EXISTS pranks.tobeconfirmed (
-      id integer PRIMARY KEY,
+      id serial PRIMARY KEY,
       email text NOT NULL,
       victim_name text NOT NULL,
       victim_birth_city text,
@@ -41,7 +41,7 @@ export default class Migration0001 extends VirtualDatabaseMigration implements D
     );
 
     CREATE TABLE IF NOT EXISTS pranks.confirmed (
-      id integer PRIMARY KEY,
+      id serial PRIMARY KEY,
       user_id integer NOT NULL,
       victim_name text NOT NULL,
       victim_birth_city text,
