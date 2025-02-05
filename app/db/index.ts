@@ -24,7 +24,7 @@ const databasePool = new Pool(
 
 export async function initDatabase() {
   using client = await databasePool.connect();
-  applyAllMigrations(client);
+  await applyAllMigrations(client);
 }
 
 export default databasePool;
