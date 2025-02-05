@@ -14,6 +14,9 @@ const databasePool = new Pool(
     database: DATABASE_NAME,
     hostname: DATABASE_HOSTNAME,
     port: +DATABASE_PORT,
+    tls: {
+      enabled: false,
+    },
   },
   48, // number of connections
   true, // lazy loading
