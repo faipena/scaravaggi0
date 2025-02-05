@@ -20,6 +20,7 @@ export async function getCurrentMigrationVersion(db: Client | PoolClient): Promi
 
 export default function applyAllMigrations(db: Client | PoolClient) {
   migrations.forEach((migration) => {
+    console.log(`Applying migration ${migration.version}`);
     migration.apply(db);
   });
 }
