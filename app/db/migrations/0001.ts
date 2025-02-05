@@ -1,7 +1,11 @@
-import { Client, PoolClient } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
+import {
+  Client,
+  PoolClient,
+} from "https://deno.land/x/postgres@v0.19.3/mod.ts";
 import { DatabaseMigration, VirtualDatabaseMigration } from "./types.ts";
 
-export default class Migration0001 extends VirtualDatabaseMigration implements DatabaseMigration {
+export default class Migration0001 extends VirtualDatabaseMigration
+  implements DatabaseMigration {
   constructor(db: Client | PoolClient) {
     super(db, 1); // REMEMBER TO UPDATE VERSION
   }
@@ -65,4 +69,4 @@ export default class Migration0001 extends VirtualDatabaseMigration implements D
 
     await this.updateDbVersion(); // DO NOT REMOVE
   }
-};
+}
