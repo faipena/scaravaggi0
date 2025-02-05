@@ -13,9 +13,9 @@ const migrations: DatabaseMigration[] = [
   Migration0000,
 ];
 
-export async function getCurrentMigrationVersion(db: Client | PoolClient): Promise<number> {
+export async function getCurrentMigrationVersion(db: Client | PoolClient): Promise<number | undefined> {
     const result = await db.queryArray<[number]>`SELECT version FROM schema_migrations ORDER BY version DESC LIMIT 1;`;
-    return result.rows[0][0];
+    return (result.rowCount ?? 0 > 0) ? result.rows[0][0] : undefined;
 }
 
 export default function applyAllMigrations(db: Client | PoolClient) {
