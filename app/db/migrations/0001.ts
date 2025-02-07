@@ -15,6 +15,8 @@ export default class Migration0001 extends VirtualDatabaseMigration
     CREATE TABLE IF NOT EXISTS users(
       id serial PRIMARY KEY,
       email text UNIQUE NOT NULL,
+      password bytea,
+      role integer NOT NULL DEFAULT 0,
       registration_date timestamp DEFAULT NOW()
     );
 

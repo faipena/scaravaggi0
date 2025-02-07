@@ -1,9 +1,18 @@
 import { FreshContext } from "$fresh/server.ts";
 import { State } from "../../routes/_middleware.ts";
 
+export enum UserRole {
+  User = 0,
+  Moderator = 10,
+  Caster = 20,
+  Admin = 30,
+}
+
 export interface UserRow {
   id: number;
   email: string;
+  password?: Uint8Array;
+  role: UserRole,
   registrationDate: Temporal.Instant;
 }
 

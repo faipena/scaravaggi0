@@ -6,8 +6,8 @@ import { State } from "./_middleware.ts";
 
 export const handler: Handlers<unknown, State> = {
   async GET(_req: Request, ctx: FreshContext<State>) {
-    const user = await UsersTable.find(ctx, "google@google.com");
-    console.log(user);
+    // const user = await UsersTable.find(ctx, "google@google.com");
+    // console.log(user);
     return ctx.render();
   },
 };
