@@ -6,8 +6,9 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_middleware from "./routes/_middleware.ts";
 import * as $index from "./routes/index.tsx";
-import * as $LogoWidget from "./islands/LogoWidget.tsx";
-import * as $Main from "./islands/Main.tsx";
+import * as $Counter from "./islands/Counter.tsx";
+import * as $Prank from "./islands/Prank.tsx";
+import * as $YoutubePlayer from "./islands/YoutubePlayer.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -18,8 +19,9 @@ const manifest = {
     "./routes/index.tsx": $index,
   },
   islands: {
-    "./islands/LogoWidget.tsx": $LogoWidget,
-    "./islands/Main.tsx": $Main,
+    "./islands/Counter.tsx": $Counter,
+    "./islands/Prank.tsx": $Prank,
+    "./islands/YoutubePlayer.tsx": $YoutubePlayer,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

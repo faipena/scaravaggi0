@@ -12,7 +12,7 @@ export interface UserRow {
   id: number;
   email: string;
   password?: Uint8Array;
-  role: UserRole,
+  role: UserRole;
   registrationDate: Temporal.Instant;
 }
 
@@ -28,9 +28,9 @@ export default class UsersTable {
     const r = await ctx.state.db.queryObject<
       UserRow
     >({
-      args: { email: email },
+      args: { email },
       camelCase: true,
-      text: `SELECT * FROM users WHERE email=$email;`,
+      text: "SELECT * FROM users WHERE email=$email;",
     });
     return (r.rowCount ?? 0 > 0) ? r.rows[0] : undefined;
   }
