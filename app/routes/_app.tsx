@@ -23,7 +23,7 @@ export default function App({ Component }: PageProps) {
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="stylesheet" href="/css/styles.css" />
       </head>
-      <body>
+      <body class="bg-gray-900 text-white">
         <Component />
       </body>
     </html>

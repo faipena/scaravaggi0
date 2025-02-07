@@ -6,3 +6,39 @@
   font-family: "Godzilla";
   src: url("/fonts/Godzilla.ttf");
 }
+
+/* Smooth scrolling for the form section */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Pulsating animation for the live indicator */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.live-dot {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
