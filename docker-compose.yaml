@@ -14,7 +14,10 @@ services:
     env_file: .env.bot
     volumes:
       - bot_data:/data
-
+    networks:
+      - default
+      - internal
+      
   db:
     image: postgres:17.2
     restart: always
