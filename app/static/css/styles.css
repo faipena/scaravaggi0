@@ -42,3 +42,11 @@ html {
   border-radius: 50%;
   animation: pulse 3s infinite;
 }
+
+.text-stroke-purple-500 {
+  -webkit-text-stroke-color: #a855f7;
+}
+
+.text-stroke-1 {
+  -webkit-text-stroke-width: 0.133rem;
+}

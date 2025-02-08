@@ -43,7 +43,7 @@ export default function LogoWidget() {
           }}
         >
           {isLiveSignal.value && <LiveIndicator />}
-          <h1 class="py-3 font-godzilla text-6xl font-bold text-purple-500 select-none">
+          <h1 class="py-3 font-godzilla text-6xl font-bold text-white text-stroke-purple-500 text-stroke-1 select-none">
             GodzillaZ
           </h1>
         </div>
