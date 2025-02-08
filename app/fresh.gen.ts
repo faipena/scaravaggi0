@@ -6,7 +6,6 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_v1_live_index from "./routes/api/v1/live/index.ts";
 import * as $index from "./routes/index.tsx";
-import * as $LiveWidget from "./islands/LiveWidget.tsx";
 import * as $LogoWidget from "./islands/LogoWidget.tsx";
 import * as $Main from "./islands/Main.tsx";
 import type { Manifest } from "$fresh/server.ts";
@@ -19,7 +18,6 @@ const manifest = {
     "./routes/index.tsx": $index,
   },
   islands: {
-    "./islands/LiveWidget.tsx": $LiveWidget,
     "./islands/LogoWidget.tsx": $LogoWidget,
     "./islands/Main.tsx": $Main,
   },
