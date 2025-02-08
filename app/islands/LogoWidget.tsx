@@ -1,4 +1,26 @@
+import { LiveIndicator } from "../components/LiveIndicator.tsx";
+import { useSignal } from "@preact/signals";
+import { useEffect } from "preact/hooks";
+
+const API_POLLING_INTERVAL = 5000;
+
 export default function LogoWidget() {
+  const isLiveSignal = useSignal(false);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      const resp = await fetch("api/v1/live");
+      const respBody = await resp.json();
+      isLiveSignal.value = respBody.isLive;
+      console.log("isLiveSignal", isLiveSignal.value);
+    };
+    fetchApi();
+    const fetchInterval = setInterval(async () => {
+      await fetchApi();
+    }, API_POLLING_INTERVAL);
+    return () => clearInterval(fetchInterval);
+  });
+
   return (
     <>
       <div class="min-h-screen flex flex-col items-center  p-8">
@@ -8,17 +30,20 @@ export default function LogoWidget() {
             src="/logo-dark.svg"
             width="128"
             height="128"
-            alt="the Fresh logo: a sliced lemon dripping with juice"
+            alt="GodzillaZ TV logo"
           />
         </div>
 
-        <div class="relative">
-          <div class="live-indicator">
-            <span class="text-red-500 font-bold">LIVE</span>
-            <div class="live-dot"></div>
-          </div>
-          
-          <h1 class="py-3 font-godzilla text-6xl font-bold text-purple-500">
+        <div
+          class={`relative ${isLiveSignal.value ? "cursor-pointer" : ""}`}
+          onClick={() => {
+            if (isLiveSignal.value) {
+              globalThis.open("https://www.twitch.tv/godzillaz_tv", "_blank");
+            }
+          }}
+        >
+          {isLiveSignal.value && <LiveIndicator />}
+          <h1 class="py-3 font-godzilla text-6xl font-bold text-purple-500 select-none">
             GodzillaZ
           </h1>
         </div>
