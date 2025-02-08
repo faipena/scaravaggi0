@@ -76,26 +76,39 @@ export default class Twitch {
     }
   }
 
-  onOnline?: () => void;
+  onOnline?: (statusChanged: boolean) => void;
 
-  onOffline?: () => void;
+  onOffline?: (statusChanged: boolean) => void;
 
   startMonitoring(interval: number = STREAM_MONITOR_INTERVAL_MS) {
-    if (this.timerMonitor) return;
-    this.timerMonitor = setInterval(async () => {
+    const checkStreamStatus = async () => {
       const streams = await this.api.getStreams({ user_login: this.channel });
       const isLive = streams.length > 0;
       const wasLive: boolean =
         (await this.db.get(["twitch", "monitoring", this.channel])).value ===
           true;
-      if (wasLive && !isLive) {
-        await this.db.set(["twitch", "monitoring", this.channel], false);
-        if (this.onOffline) this.onOffline();
-      } else if (isLive && !wasLive) {
-        await this.db.set(["twitch", "monitoring", this.channel], true);
-        if (this.onOnline) this.onOnline();
+
+      const statusChanged = wasLive !== isLive;
+
+      // update status in db
+      if (statusChanged) {
+        await this.db.set(["twitch", "monitoring", this.channel], isLive);
       }
-    }, interval);
+
+      // notify
+      if (isLive) {
+        this.onOnline?.(statusChanged);
+      } else {
+        this.onOffline?.(statusChanged);
+      }
+    };
+
+    // Call the callback immediately
+    checkStreamStatus();
+
+    // Set the interval for subsequent calls
+    if (this.timerMonitor) return;
+    this.timerMonitor = setInterval(checkStreamStatus, interval);
   }
 
   stopMonitoring() {
