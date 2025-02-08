@@ -1,6 +1,6 @@
 import { FreshContext } from "$fresh/server.ts";
 import { Handlers } from "$fresh/server.ts";
-import AppState from "../../../../appState.ts";
+import AppState from "../../../../state.ts";
 
 const BOT_TOKEN = Deno.env.get("BOT_TOKEN");
 
