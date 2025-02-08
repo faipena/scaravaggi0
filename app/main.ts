@@ -10,5 +10,8 @@ import "$std/dotenv/load.ts";
 import { start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
 import config from "./fresh.config.ts";
+import { initDatabase } from "./db/index.ts";
+
+await initDatabase();
 
 await start(manifest, config);
