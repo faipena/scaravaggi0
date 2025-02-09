@@ -12,7 +12,6 @@ export default function LogoWidget() {
       const resp = await fetch("api/v1/live");
       const respBody = await resp.json();
       isLiveSignal.value = respBody.isLive;
-      console.log("isLiveSignal", isLiveSignal.value);
     };
     fetchApi();
     const fetchInterval = setInterval(async () => {
