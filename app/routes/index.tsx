@@ -1,4 +1,4 @@
-import Main, { MainStatus } from "../islands/Main.tsx";
+import Main, { MainStage } from "../islands/Main.tsx";
 import LogoWidget from "../islands/LogoWidget.tsx";
 import { FreshContext, Handlers, PageProps } from "$fresh/server.ts";
 // import UsersTable from "../db/schema/users.ts";
@@ -20,12 +20,12 @@ interface Data {
 
 export default function Home({ data }: PageProps<Data>) {
   const videoId = useSignal(data.videoId);
-  const formStatus = useSignal(MainStatus.Start);
+  const formStatus = useSignal(MainStage.Video);
   return (
     <>
       <div class="min-h-screen flex flex-col items-center p-8">
         <LogoWidget></LogoWidget>
-        <Main videoId={videoId} status={formStatus}></Main>
+        <Main videoId={videoId} stage={formStatus}></Main>
       </div>
     </>
   );
