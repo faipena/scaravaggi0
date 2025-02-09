@@ -4,6 +4,7 @@ const SMTP_HOSTNAME = Deno.env.get("SMTP_HOSTNAME");
 const SMTP_PORT = Deno.env.get("SMTP_PORT");
 const SMTP_USERNAME = Deno.env.get("SMTP_USERNAME");
 const SMTP_PASSWORD = Deno.env.get("SMTP_PASSWORD");
+const SMTP_FROM = Deno.env.get("SMTP_FROM");
 
 export default class Email {
   static #client?: SMTPClient;
@@ -28,7 +29,7 @@ export default class Email {
       });
     }
     await this.#client.send({
-      from: "GodzillaZ <noreply@godzillaz.top>",
+      from: SMTP_FROM!,
       to,
       subject,
       content,
