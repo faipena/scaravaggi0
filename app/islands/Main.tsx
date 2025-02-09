@@ -20,15 +20,15 @@ interface MainProps {
 
 // Class representing the form data
 class PrankForm {
-  victimName?: string;
-  victimBirthCity?: string;
-  victimCurrentCity?: string;
-  victimBirthDate?: string;
-  victimPhoneNumber?: string;
-  relationship?: string;
-  prankTypeId?: string;
-  description?: string;
-  email?: string;
+  victimName: string = "";
+  victimBirthCity: string = "";
+  victimCurrentCity: string = "";
+  victimBirthDate: string = "";
+  victimPhoneNumber: string = "";
+  relationship: string = "";
+  prankTypeId: string = "";
+  description: string = "";
+  email: string = "";
 }
 
 export default function Main(props: MainProps) {
@@ -43,7 +43,7 @@ export default function Main(props: MainProps) {
   // Handle input changes and update the form data
   const handleInputChange = (event: Event) => {
     const target = event.target as HTMLInputElement | HTMLTextAreaElement;
-    prankForm.value[target.name as keyof PrankForm] = target.value;
+    prankForm.value = { ...prankForm.value, [target.name]: target.value };
   };
 
   // Handle form submission for victim details
