@@ -16,7 +16,7 @@ Il progetto utilizza [Docker Compose](./docker-compose.yaml) per il deploy. Lo s
 ## Installazione
 
 0. Installare [Docker](https://docs.docker.com/engine/install/)
-1. Clonare questa repository
+1. Clonare questa repository, assicurandosi di avere [git-lfs](https://git-lfs.com/) installato.
 2. Copiare i file di esempio dalla cartella [examples](examples/) alla root folder di questa repository
 3. Modificare i file copiati nel punto precendente seguendo le istruzioni contenute all'interno.
 4. Rinominare i file di configurazione rimuovendo `example` dal nome, alla fine del processo un dovreste avere I seguenti file:
@@ -41,6 +41,7 @@ godzillaz-tv/
 
 > [!WARNING]  
 > Per stoppare il progetto eseguire `docker compose down`
+> 
 > Semplicemente chiudere il processo non fermerà il progetto
 
 Una volta avviato, il progetto sarà disponibile all'indirizzo [https://localhost](https://localhost/).
@@ -49,8 +50,8 @@ Una volta avviato, il progetto sarà disponibile all'indirizzo [https://localhos
 
 ## Contribuire
 Se desideri contribuire al progetto, segui questi passaggi:
-0. Assicurati di avere **git-lfs** installato.
-1. Fork della repository.
+
+1. Fork della repository, assicurandoti di avere [git-lfs](https://git-lfs.com/) installato.
 2. Crea un branch per la tua feature (`git checkout -b nuova-feature`).
 3. Fai commit delle tue modifiche (`git commit -m 'Aggiunta nuova feature'`).
 4. Push del branch (`git push origin nuova-feature`).
