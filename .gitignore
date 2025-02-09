@@ -6,3 +6,8 @@
 _fresh/
 # npm dependencies
 node_modules/
+
+app/routes/tests
+
+# https://github.com/denoland/fresh/discussions/2394
+fresh.gen.ts
