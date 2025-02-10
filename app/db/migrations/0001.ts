@@ -12,11 +12,15 @@ export default class Migration0001 extends VirtualDatabaseMigration
 
   override async apply() {
     await this.db.queryArray`
-    CREATE TABLE IF NOT EXISTS users(
+    CREATE SCHEMA IF NOT EXISTS users;
+
+    CREATE TYPE users.role AS ENUM ('User', 'Caster');
+
+    CREATE TABLE IF NOT EXISTS users.logins(
       id serial PRIMARY KEY,
       email text UNIQUE NOT NULL,
       password bytea,
-      role integer NOT NULL DEFAULT 0,
+      role users.role NOT NULL DEFAULT 'User',
       registration_date timestamp DEFAULT NOW()
     );
 
@@ -64,7 +68,7 @@ export default class Migration0001 extends VirtualDatabaseMigration
         ON DELETE SET NULL,
       CONSTRAINT fk_user
         FOREIGN KEY(user_id)
-        REFERENCES users(id)
+        REFERENCES users.logins(id)
         ON DELETE SET NULL
     );
     `;
