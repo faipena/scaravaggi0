@@ -29,6 +29,9 @@ class PrankForm {
   prankTypeId: string = "";
   description: string = "";
   email: string = "";
+  // Captcha elements
+  molesCount: string = "1337";
+  weddingDate: string = `${Date.now()}`;
 }
 
 export default function Main(props: MainProps) {
@@ -144,6 +147,15 @@ export default function Main(props: MainProps) {
             value={prankForm.value.victimPhoneNumber}
             onChange={handleInputChange}
           />
+          <FormField
+            label="Numero di nei della vittima"
+            type="number"
+            name="molesCount"
+            value={prankForm.value.molesCount}
+            onChange={handleInputChange}
+            hidden
+            required
+          />
           <Button
             type="submit"
             class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-full transition duration-300"
@@ -191,6 +203,15 @@ export default function Main(props: MainProps) {
             name="description"
             value={prankForm.value.description}
             onChange={handleInputChange}
+          />
+          <FormField
+            label="Data di matrimonio"
+            type="number"
+            name="weddingDate"
+            value={prankForm.value.weddingDate}
+            onChange={handleInputChange}
+            hidden
+            required
           />
           <div class="flex justify-between">
             <Button
