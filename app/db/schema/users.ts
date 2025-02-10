@@ -1,5 +1,5 @@
 import { FreshContext } from "$fresh/server.ts";
-import { State } from "../../routes/_middleware.ts";
+import { DatabaseState } from "../../routes/_middleware.ts";
 
 export type UserRole = "User" | "Caster";
 
@@ -12,13 +12,13 @@ export interface UserRow {
 }
 
 export default class UsersTable {
-  static async insert(ctx: FreshContext<State>, email: string) {
+  static async insert(ctx: FreshContext<DatabaseState>, email: string) {
     await ctx.state.db
       .queryObject`INSERT INTO users.logins(email) VALUES(${email});`;
   }
 
   static async find(
-    ctx: FreshContext<State>,
+    ctx: FreshContext<DatabaseState>,
     email: string,
   ): Promise<UserRow | undefined> {
     const r = await ctx.state.db.queryObject<
