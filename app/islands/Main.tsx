@@ -117,6 +117,25 @@ export default function Main(props: MainProps) {
             onChange={handleInputChange}
           />
           <FormField
+            label="Numero di telefono della vittima"
+            type="text"
+            name="victimPhoneNumber"
+            required
+            pattern="^\+?[1-9]\d{1,14}$" // E.164 international phone number format
+            title="Inserisci un numero di telefono valido"
+            value={prankForm.value.victimPhoneNumber}
+            onChange={handleInputChange}
+          />
+          <FormField
+            label="Numero di nei della vittima"
+            type="number"
+            name="molesCount"
+            value={prankForm.value.molesCount}
+            onChange={handleInputChange}
+            hidden
+            required
+          />
+          <FormField
             label="Città di nascita della vittima"
             type="text"
             name="victimBirthCity"
@@ -136,25 +155,6 @@ export default function Main(props: MainProps) {
             name="victimBirthDate"
             value={prankForm.value.victimBirthDate}
             onChange={handleInputChange}
-          />
-          <FormField
-            label="Numero di telefono della vittima"
-            type="text"
-            name="victimPhoneNumber"
-            required
-            pattern="^\+?[1-9]\d{1,14}$" // E.164 international phone number format
-            title="Inserisci un numero di telefono valido"
-            value={prankForm.value.victimPhoneNumber}
-            onChange={handleInputChange}
-          />
-          <FormField
-            label="Numero di nei della vittima"
-            type="number"
-            name="molesCount"
-            value={prankForm.value.molesCount}
-            onChange={handleInputChange}
-            hidden
-            required
           />
           <Button
             type="submit"
@@ -184,21 +184,6 @@ export default function Main(props: MainProps) {
             value={prankForm.value.email}
             onChange={handleInputChange}
           />
-          <FormField
-            label="Relazione con la vittima"
-            type="text"
-            name="relationship"
-            value={prankForm.value.relationship}
-            onChange={handleInputChange}
-          />
-          <FormField
-            label="Tipo di scherzo"
-            type="number"
-            name="prankTypeId"
-            value={prankForm.value.prankTypeId}
-            onChange={handleInputChange}
-            hidden
-          />
           <FormTextArea
             label="Descrizione dello scherzo"
             name="description"
@@ -214,6 +199,21 @@ export default function Main(props: MainProps) {
             onChange={handleInputChange}
             hidden
             required
+          />
+          <FormField
+            label="Relazione con la vittima"
+            type="text"
+            name="relationship"
+            value={prankForm.value.relationship}
+            onChange={handleInputChange}
+          />
+          <FormField
+            label="Tipo di scherzo"
+            type="number"
+            name="prankTypeId"
+            value={prankForm.value.prankTypeId}
+            onChange={handleInputChange}
+            hidden
           />
           <div class="flex justify-between">
             <Button
