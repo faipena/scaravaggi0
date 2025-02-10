@@ -35,8 +35,8 @@ export class PranksTypesTable {
 interface CommonPranksOptions {
   victimName: string;
   victimPhoneNumber: string;
+  description: string;
   prankTypeId?: number;
-  description?: string;
   victimBirthCity?: string;
   victimCurrentCity?: string;
   victimBirthDate?: Temporal.Instant;

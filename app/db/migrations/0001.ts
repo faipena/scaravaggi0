@@ -33,16 +33,16 @@ export default class Migration0001 extends VirtualDatabaseMigration
     
     CREATE TABLE IF NOT EXISTS pranks.tobeconfirmed (
       id serial PRIMARY KEY,
+      confirmation_code text NOT NULL UNIQUE,
       email text NOT NULL,
       victim_name text NOT NULL,
       victim_phone_number text NOT NULL,
-      confirmation_code text NOT NULL UNIQUE,
+      description text NOT NULL,
       victim_birth_city text,
       victim_current_city text,
       victim_birth_date date,
       relationship text,
       prank_type_id integer,
-      description text,
       sent_date timestamp DEFAULT NOW(),
       CONSTRAINT fk_prank_type
         FOREIGN KEY(prank_type_id)
@@ -55,12 +55,12 @@ export default class Migration0001 extends VirtualDatabaseMigration
       user_id integer NOT NULL,
       victim_name text NOT NULL,
       victim_phone_number text NOT NULL,
+      description text NOT NULL,
       victim_birth_city text,
       victim_current_city text,
       victim_birth_date date,
       relationship text,
       prank_type_id integer,
-      description text,
       sent_date timestamp DEFAULT NOW(),
       CONSTRAINT fk_prank_type
         FOREIGN KEY(prank_type_id)

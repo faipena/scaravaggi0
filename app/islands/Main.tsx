@@ -197,12 +197,14 @@ export default function Main(props: MainProps) {
             name="prankTypeId"
             value={prankForm.value.prankTypeId}
             onChange={handleInputChange}
+            hidden
           />
           <FormTextArea
             label="Descrizione dello scherzo"
             name="description"
             value={prankForm.value.description}
             onChange={handleInputChange}
+            required
           />
           <FormField
             label="Data di matrimonio"
