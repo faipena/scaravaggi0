@@ -3,6 +3,7 @@ import { Handlers } from "$fresh/server.ts";
 
 export const handler: Handlers = {
   GET(_req: Request, _ctx: FreshContext) {
+    // TODO: authentication
     console.log();
     return new Response(_ctx.params.id, { status: 200 });
   },
