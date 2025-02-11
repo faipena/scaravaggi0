@@ -39,7 +39,7 @@ interface CommonPranksOptions {
   prankTypeId?: number;
   victimBirthCity?: string;
   victimCurrentCity?: string;
-  victimBirthDate?: Temporal.Instant;
+  victimBirthDate?: Temporal.PlainDate;
   relationship?: string;
 }
 
@@ -63,10 +63,11 @@ export class PranksTable {
       victimBirthDate,
       victimCurrentCity,
     } = options;
+    const confirmationCode = crypto.randomUUID();
     await ctx.state.db.queryObject(
       {
         args: [
-          crypto.randomUUID(),
+          confirmationCode,
           email,
           victimName,
           victimPhoneNumber,
@@ -93,5 +94,6 @@ export class PranksTable {
         `,
       },
     );
+    return confirmationCode;
   }
 }

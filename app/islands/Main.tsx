@@ -56,11 +56,10 @@ export default function Main(props: MainProps) {
   };
 
   // Handle form submission for prank details
-  const handlePrankDetailsSubmit = (event: Event) => {
+  const handlePrankDetailsSubmit = async (event: Event) => {
     event.preventDefault();
     props.stage.value = MainStage.RequestSent;
-    // TODO: Send the form data to the server
-    console.log(prankForm.value);
+    await fetch("/api/v1/prank", {method: "POST", body: JSON.stringify(prankForm.value)});
   };
 
   // Reset the form data

@@ -6,6 +6,8 @@ const SMTP_USERNAME = Deno.env.get("SMTP_USERNAME");
 const SMTP_PASSWORD = Deno.env.get("SMTP_PASSWORD");
 const SMTP_FROM = Deno.env.get("SMTP_FROM");
 
+const CONFIRM_BASE_URL = "https://godzillaz.top/prank/confirm";
+
 export default class Email {
   static #client?: SMTPClient;
 
@@ -35,5 +37,13 @@ export default class Email {
       content,
       html,
     });
+  }
+
+  static async sendPrankConfirmation(to: string, confirmationCode: string) {
+    await this.sendEmail(
+      to,
+      "Conferma il tuo scherzo!",
+      `Grazie di averci inviato il tuo scherzo!\nPer confermare il tuo scherzo clicka qui:\n\n${CONFIRM_BASE_URL}/${confirmationCode}\n\nSe non hai richiesto nessuno scherzo, perfavore ignora questa email.\n\nTeam GodzillaZ`,
+    );
   }
 }
