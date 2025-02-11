@@ -22,9 +22,14 @@ export default function LogoWidget() {
 
   return (
     <>
-      <div class="flex flex-col items-center  p-8">
+      <div class="flex flex-col items-center p-8">
         {/* Logo */}
-        <div class="mb-8">
+        <div
+          class="mb-8 cursor-pointer"
+          onClick={() => {
+            globalThis.location.assign("/");
+          }}
+        >
           <img
             src="/logo-dark.svg"
             width="128"

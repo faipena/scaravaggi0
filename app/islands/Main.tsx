@@ -59,7 +59,10 @@ export default function Main(props: MainProps) {
   const handlePrankDetailsSubmit = async (event: Event) => {
     event.preventDefault();
     props.stage.value = MainStage.RequestSent;
-    await fetch("/api/v1/prank", {method: "POST", body: JSON.stringify(prankForm.value)});
+    await fetch("/api/v1/prank", {
+      method: "POST",
+      body: JSON.stringify(prankForm.value),
+    });
   };
 
   // Reset the form data

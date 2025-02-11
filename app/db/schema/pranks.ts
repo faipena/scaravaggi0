@@ -47,6 +47,11 @@ export interface ToBeConfirmedPrankOptions extends CommonPranksOptions {
   email: string;
 }
 
+interface PrankToBeConfirmed extends ToBeConfirmedPrankOptions {
+  id: number;
+  sentDate: Temporal.Instant;
+}
+
 export class PranksTable {
   static async insertToBeConfirmed(
     ctx: FreshContext<DatabaseState>,
@@ -95,5 +100,36 @@ export class PranksTable {
       },
     );
     return confirmationCode;
+  }
+
+  static async confirmPrank(
+    ctx: FreshContext<DatabaseState>,
+    confirmationCode: string,
+  ): Promise<PrankToBeConfirmed | undefined> {
+    try {
+      const transaction = ctx.state.db.createTransaction(
+        "confirm_prank",
+        { isolation_level: "serializable" },
+      );
+      await transaction.begin();
+      const result = await transaction.queryObject<
+        PrankToBeConfirmed
+      >({
+        args: { confirmationCode },
+        camelCase: true,
+        text:
+          `SELECT * FROM pranks.tobeconfirmed WHERE confirmation_code=$confirmationCode`,
+      });
+      if ((result.rowCount ?? 0) === 0) {
+        await transaction.rollback();
+        return;
+      }
+      await transaction
+        .queryArray`DELETE FROM pranks.tobeconfirmed WHERE confirmation_code=${confirmationCode}`;
+      await transaction.commit();
+      return result.rows[0];
+    } catch {
+      return;
+    }
   }
 }

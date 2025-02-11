@@ -5,15 +5,15 @@ import Email from "../../../../smtp.ts";
 import { DatabaseState } from "../../../_middleware.ts";
 
 function optional(value: string): string | undefined {
-    return (value.trim().length == 0) ? undefined : value.trim();
+  return (value.trim().length == 0) ? undefined : value.trim();
 }
 
 function optionalDate(value: string): Temporal.PlainDate | undefined {
-    try {
-        return Temporal.PlainDate.from(value);
-    } catch {
-        return undefined;
-    }
+  try {
+    return Temporal.PlainDate.from(value);
+  } catch {
+    return undefined;
+  }
 }
 
 export const handler: Handlers<unknown, DatabaseState> = {
@@ -23,9 +23,9 @@ export const handler: Handlers<unknown, DatabaseState> = {
       // TODO: captcha
       // TODO: rate limiting
       // TODO: validate data
-      const response = new Response(JSON.stringify({"message": "ok"}));
+      const response = new Response(JSON.stringify({ "message": "ok" }));
       console.log(body);
-      const confirmationCode =  await PranksTable.insertToBeConfirmed(ctx, {
+      const confirmationCode = await PranksTable.insertToBeConfirmed(ctx, {
         victimName: body.victimName,
         victimPhoneNumber: body.victimPhoneNumber,
         description: body.description,
@@ -38,7 +38,9 @@ export const handler: Handlers<unknown, DatabaseState> = {
       Email.sendPrankConfirmation(body.email, confirmationCode);
       return response;
     } catch {
-      return new Response(JSON.stringify({"error": "invalid request"}), { status: 400 });
+      return new Response(JSON.stringify({ "error": "invalid request" }), {
+        status: 400,
+      });
     }
   },
 };
