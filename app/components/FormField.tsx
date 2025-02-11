@@ -6,14 +6,20 @@ interface FormFieldProps {
   pattern?: string;
   title?: string;
   value?: string;
+  hidden?: boolean;
   onChange?: (event: Event) => void;
 }
 
+function requiredFieldLabel() {
+  return <span class="text-red-500">*</span>;
+}
+
 export default function FormField(props: FormFieldProps) {
+  const style = props.hidden ? "display: none" : undefined;
   return (
-    <div>
+    <div style={style}>
       <label class="block text-sm font-medium text-gray-300">
-        {props.label}
+        {props.label} {props.required && requiredFieldLabel()}
       </label>
       <input
         type={props.type}

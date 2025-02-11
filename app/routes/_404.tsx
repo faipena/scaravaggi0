@@ -1,4 +1,5 @@
 import { Head } from "$fresh/runtime.ts";
+import LogoWidget from "../islands/LogoWidget.tsx";
 
 export default function Error404() {
   return (
@@ -6,20 +7,16 @@ export default function Error404() {
       <Head>
         <title>404 - Page not found</title>
       </Head>
-      <div class="px-4 py-8 mx-auto">
-        <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
-          <img
-            class="my-6"
-            src="/logo.svg"
-            width="128"
-            height="128"
-            alt="the Fresh logo: a sliced lemon dripping with juice"
-          />
-          <h1 class="text-4xl font-bold">404 - Page not found</h1>
-          <p class="my-4">
-            The page you were looking for doesn't exist.
+      <div class="min-h-screen flex flex-col items-center p-8">
+        <LogoWidget></LogoWidget>
+        <div class="w-full max-w-4xl mt-4 p-8 bg-gray-800 rounded-lg shadow-lg">
+          <h2 class="text-3xl font-bold text-red-500 mb-6">
+            Pagina non trovata
+          </h2>
+          <p class="text-white">
+            Abbiamo cercato ovunque, ma non abbiamo trovato nulla. Hai provato a
+            guardare nel tuo cuore?
           </p>
-          <a href="/" class="underline">Go back home</a>
         </div>
       </div>
     </>

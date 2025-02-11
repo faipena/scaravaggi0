@@ -15,7 +15,6 @@ export const handler: Handlers = {
     }
     if (req.headers.get("bot-token") === BOT_TOKEN) {
       const body = await req.json();
-      console.info("Live status update requested ", body);
       AppState.isLive = body.isLive;
       return new Response();
     }

@@ -2,14 +2,14 @@ import { LiveIndicator } from "../components/LiveIndicator.tsx";
 import { useSignal } from "@preact/signals";
 import { useEffect } from "preact/hooks";
 
-const API_POLLING_INTERVAL = 5000;
+const API_POLLING_INTERVAL = 30_000;
 
 export default function LogoWidget() {
   const isLiveSignal = useSignal(false);
 
   useEffect(() => {
     const fetchApi = async () => {
-      const resp = await fetch("api/v1/live");
+      const resp = await fetch("/api/v1/live");
       const respBody = await resp.json();
       isLiveSignal.value = respBody.isLive;
     };
@@ -22,9 +22,14 @@ export default function LogoWidget() {
 
   return (
     <>
-      <div class="flex flex-col items-center  p-8">
+      <div class="flex flex-col items-center p-8">
         {/* Logo */}
-        <div class="mb-8">
+        <div
+          class="mb-8 cursor-pointer"
+          onClick={() => {
+            globalThis.location.assign("/");
+          }}
+        >
           <img
             src="/logo-dark.svg"
             width="128"

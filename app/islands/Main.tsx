@@ -29,6 +29,9 @@ class PrankForm {
   prankTypeId: string = "";
   description: string = "";
   email: string = "";
+  // Captcha elements
+  molesCount: string = "1337";
+  weddingDate: string = `${Date.now()}`;
 }
 
 export default function Main(props: MainProps) {
@@ -53,11 +56,13 @@ export default function Main(props: MainProps) {
   };
 
   // Handle form submission for prank details
-  const handlePrankDetailsSubmit = (event: Event) => {
+  const handlePrankDetailsSubmit = async (event: Event) => {
     event.preventDefault();
     props.stage.value = MainStage.RequestSent;
-    // TODO: Send the form data to the server
-    console.log(prankForm.value);
+    await fetch("/api/v1/prank", {
+      method: "POST",
+      body: JSON.stringify(prankForm.value),
+    });
   };
 
   // Reset the form data
@@ -114,6 +119,25 @@ export default function Main(props: MainProps) {
             onChange={handleInputChange}
           />
           <FormField
+            label="Numero di telefono della vittima"
+            type="text"
+            name="victimPhoneNumber"
+            required
+            pattern="^\+?[1-9]\d{1,14}$" // E.164 international phone number format
+            title="Inserisci un numero di telefono valido"
+            value={prankForm.value.victimPhoneNumber}
+            onChange={handleInputChange}
+          />
+          <FormField
+            label="Numero di nei della vittima"
+            type="number"
+            name="molesCount"
+            value={prankForm.value.molesCount}
+            onChange={handleInputChange}
+            hidden
+            required
+          />
+          <FormField
             label="Città di nascita della vittima"
             type="text"
             name="victimBirthCity"
@@ -132,16 +156,6 @@ export default function Main(props: MainProps) {
             type="date"
             name="victimBirthDate"
             value={prankForm.value.victimBirthDate}
-            onChange={handleInputChange}
-          />
-          <FormField
-            label="Numero di telefono della vittima"
-            type="text"
-            name="victimPhoneNumber"
-            required
-            pattern="^\+?[1-9]\d{1,14}$" // E.164 international phone number format
-            title="Inserisci un numero di telefono valido"
-            value={prankForm.value.victimPhoneNumber}
             onChange={handleInputChange}
           />
           <Button
@@ -172,6 +186,22 @@ export default function Main(props: MainProps) {
             value={prankForm.value.email}
             onChange={handleInputChange}
           />
+          <FormTextArea
+            label="Descrizione dello scherzo"
+            name="description"
+            value={prankForm.value.description}
+            onChange={handleInputChange}
+            required
+          />
+          <FormField
+            label="Data di matrimonio"
+            type="number"
+            name="weddingDate"
+            value={prankForm.value.weddingDate}
+            onChange={handleInputChange}
+            hidden
+            required
+          />
           <FormField
             label="Relazione con la vittima"
             type="text"
@@ -185,12 +215,7 @@ export default function Main(props: MainProps) {
             name="prankTypeId"
             value={prankForm.value.prankTypeId}
             onChange={handleInputChange}
-          />
-          <FormTextArea
-            label="Descrizione dello scherzo"
-            name="description"
-            value={prankForm.value.description}
-            onChange={handleInputChange}
+            hidden
           />
           <div class="flex justify-between">
             <Button

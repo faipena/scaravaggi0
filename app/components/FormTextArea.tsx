@@ -7,11 +7,15 @@ interface FormTextAreaProps {
   onChange?: (event: Event) => void;
 }
 
+function requiredFieldLabel() {
+  return <span class="text-red-500">*</span>;
+}
+
 export default function FormTextArea(props: FormTextAreaProps) {
   return (
     <div>
       <label class="block text-sm font-medium text-gray-300">
-        {props.label}
+        {props.label} {props.required && requiredFieldLabel()}
       </label>
       <textarea
         name={props.name}

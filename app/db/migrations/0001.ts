@@ -12,37 +12,41 @@ export default class Migration0001 extends VirtualDatabaseMigration
 
   override async apply() {
     await this.db.queryArray`
-    CREATE TABLE IF NOT EXISTS users(
+    CREATE SCHEMA IF NOT EXISTS users;
+
+    CREATE TYPE users.role AS ENUM ('User', 'Caster');
+
+    CREATE TABLE IF NOT EXISTS users.logins(
       id serial PRIMARY KEY,
       email text UNIQUE NOT NULL,
       password bytea,
-      role integer NOT NULL DEFAULT 0,
+      role users.role NOT NULL DEFAULT 'User',
       registration_date timestamp DEFAULT NOW()
     );
 
     CREATE SCHEMA IF NOT EXISTS pranks;
 
-    CREATE TABLE IF NOT EXISTS pranks.type (
+    CREATE TABLE IF NOT EXISTS pranks.types (
       id serial PRIMARY KEY,
       name text UNIQUE NOT NULL
     );
     
     CREATE TABLE IF NOT EXISTS pranks.tobeconfirmed (
       id serial PRIMARY KEY,
+      confirmation_code text NOT NULL UNIQUE,
       email text NOT NULL,
       victim_name text NOT NULL,
+      victim_phone_number text NOT NULL,
+      description text NOT NULL,
       victim_birth_city text,
       victim_current_city text,
       victim_birth_date date,
-      victim_phone_number text NOT NULL,
       relationship text,
       prank_type_id integer,
-      description text,
       sent_date timestamp DEFAULT NOW(),
-      confirmation_code text NOT NULL UNIQUE,
       CONSTRAINT fk_prank_type
         FOREIGN KEY(prank_type_id)
-        REFERENCES pranks.type(id)
+        REFERENCES pranks.types(id)
         ON DELETE SET NULL
     );
 
@@ -50,21 +54,21 @@ export default class Migration0001 extends VirtualDatabaseMigration
       id serial PRIMARY KEY,
       user_id integer NOT NULL,
       victim_name text NOT NULL,
+      victim_phone_number text NOT NULL,
+      description text NOT NULL,
       victim_birth_city text,
       victim_current_city text,
       victim_birth_date date,
-      victim_phone_number text NOT NULL,
       relationship text,
       prank_type_id integer,
-      description text,
       sent_date timestamp DEFAULT NOW(),
       CONSTRAINT fk_prank_type
         FOREIGN KEY(prank_type_id)
-        REFERENCES pranks.type(id)
+        REFERENCES pranks.types(id)
         ON DELETE SET NULL,
       CONSTRAINT fk_user
         FOREIGN KEY(user_id)
-        REFERENCES users(id)
+        REFERENCES users.logins(id)
         ON DELETE SET NULL
     );
     `;
