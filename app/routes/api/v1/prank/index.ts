@@ -1,7 +1,7 @@
 import { FreshContext } from "$fresh/server.ts";
 import { Handlers } from "$fresh/server.ts";
 import { PranksTable } from "../../../../db/schema/pranks.ts";
-import Email from "../../../../smtp.ts";
+import Email from "../../../../email.ts";
 import { DatabaseState } from "../../../_middleware.ts";
 
 function optional(value: string): string | undefined {

@@ -4,6 +4,7 @@ import { PranksTable } from "../../../db/schema/pranks.ts";
 import { DatabaseState } from "../../_middleware.ts";
 import LogoWidget from "../../../islands/LogoWidget.tsx";
 import ConfirmationResult from "../../../islands/PrankConfirmation.tsx";
+import Email from "../../../email.ts";
 
 export const handler: Handlers<unknown, DatabaseState> = {
   async GET(_req: Request, ctx: FreshContext<DatabaseState>) {
@@ -12,7 +13,7 @@ export const handler: Handlers<unknown, DatabaseState> = {
       ctx.params.confirmationCode,
     );
     if (prank) {
-      // TODO: send email or transfer to permanent table
+      Email.sendPrank(prank);
       return ctx.render({ success: true });
     }
     return ctx.render({ success: false }, { status: 404 });

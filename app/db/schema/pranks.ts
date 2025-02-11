@@ -47,7 +47,7 @@ export interface ToBeConfirmedPrankOptions extends CommonPranksOptions {
   email: string;
 }
 
-interface PrankToBeConfirmed extends ToBeConfirmedPrankOptions {
+export interface PrankToBeConfirmed extends ToBeConfirmedPrankOptions {
   id: number;
   sentDate: Temporal.Instant;
 }
