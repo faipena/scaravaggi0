@@ -30,6 +30,7 @@ export default function FormField(props: FormFieldProps) {
         title={props.title}
         value={props.value}
         onChange={props.onChange}
+        maxLength={100} // TODO: FIXME
       />
     </div>
   );

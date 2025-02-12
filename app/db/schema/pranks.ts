@@ -80,7 +80,7 @@ export class PranksTable {
           prankTypeId,
           description,
           victimBirthCity,
-          victimBirthDate,
+          victimBirthDate?.toString(),
           victimCurrentCity,
         ],
         text: `

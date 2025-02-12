@@ -31,34 +31,65 @@ function leetCompare(input: string, value: string) {
   ) => (LEET_ALPHABET[value] ?? value)).join("") === value;
 }
 
+// deno-lint-ignore no-explicit-any
+function validateForm(body: any): boolean {
+  let valid = true;
+  // Captchas
+  valid &&= leetCompare(body.superSecretCode, "coglione") ||
+    leetCompare(body.superSecretCode, "loprendiinculo");
+  const timeDiff = new Date().getTime() - body.weddingDate;
+  valid &&= !Number.isNaN(timeDiff);
+  valid &&= !(timeDiff < 30_000); // 30 seconds not ellapsed
+  valid &&= !(timeDiff > (60_000 * 60 * 24)); // More than 1 day ellapsed
+  // Data validation
+  valid &&= body.victimName.length < 100;
+  valid &&= body.description.length > 100;
+  valid &&= body.description.length < 1500;
+  valid &&= body.email.length < 100;
+  valid &&= body.victimName.trim().match(
+    /^[A-Za-zÀ-ÖØ-öø-ÿ']+(\s[A-Za-zÀ-ÖØ-öø-ÿ']+)*$/i,
+  ) !== null;
+  valid &&=
+    body.victimPhoneNumber.match(/^(\+39)?(0\d{7,11}|3\d{8,9})$/) !== null;
+  valid &&=
+    body.email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/) !==
+      null;
+  //TODO: validate description ?
+  // Optional data
+  if (optional(body.victimBirthCity)) {
+    valid &&= body.victimBirthCity.length < 100;
+    valid &&= body.victimBirthCity.trim().match(
+      /^[A-Za-zÀ-ÖØ-öø-ÿ']+(\s[A-Za-zÀ-ÖØ-öø-ÿ']+)*$/i,
+    ) !== null;
+  }
+  if (optional(body.victimCurrentCity)) {
+    valid &&= body.victimCurrentCity.length < 100;
+    valid &&= body.victimCurrentCity.trim().match(
+      /^[A-Za-zÀ-ÖØ-öø-ÿ']+(\s[A-Za-zÀ-ÖØ-öø-ÿ']+)*$/i,
+    ) !== null;
+  }
+  if (optional(body.relationship)) {
+    valid &&= body.relationship.length < 100;
+    valid &&= body.relationship.trim().match(/^[A-Za-zÀ-ÖØ-öø-ÿ']+$/i) !== null;
+  }
+  return valid;
+}
+
 export const handler: Handlers<unknown, DatabaseState> = {
   async POST(req: Request, ctx: FreshContext<DatabaseState>) {
     try {
       const body = await req.json();
       const response = new Response(JSON.stringify({ "message": "ok" }));
       // TODO: rate limiting
-      // TODO: validate data
-      if (
-        !leetCompare(body.superSecretCode, "coglione") &&
-        !leetCompare(body.superSecretCode, "loprendiinculo")
-      ) {
-        return response;
-      }
-      const timeDiff = new Date().getTime() - body.weddingDate;
-      if (
-        Number.isNaN(timeDiff) ||
-        // 30 seconds not ellapsed
-        (timeDiff < 30_000) ||
-        // More than 1 day ellapsed
-        (timeDiff > (60_000 * 60 * 24))
-      ) {
+
+      if (!validateForm(body)) {
         return response;
       }
 
       const confirmationCode = await PranksTable.insertToBeConfirmed(ctx, {
-        victimName: body.victimName,
-        victimPhoneNumber: body.victimPhoneNumber,
-        description: body.description,
+        victimName: body.victimName.trim(),
+        victimPhoneNumber: body.victimPhoneNumber.trim(),
+        description: body.description.trim(),
         email: body.email,
         victimBirthCity: optional(body.victimBirthCity),
         victimBirthDate: optionalDate(body.victimBirthDate),
