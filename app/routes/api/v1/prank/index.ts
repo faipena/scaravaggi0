@@ -44,7 +44,17 @@ export const handler: Handlers<unknown, DatabaseState> = {
       ) {
         return response;
       }
-      console.log(body);
+      const timeDiff = new Date().getTime() - body.weddingDate;
+      if (
+        Number.isNaN(timeDiff) ||
+        // 30 seconds not ellapsed
+        (timeDiff < 30_000) ||
+        // More than 1 day ellapsed
+        (timeDiff > (60_000 * 60 * 24))
+      ) {
+        return response;
+      }
+
       const confirmationCode = await PranksTable.insertToBeConfirmed(ctx, {
         victimName: body.victimName,
         victimPhoneNumber: body.victimPhoneNumber,

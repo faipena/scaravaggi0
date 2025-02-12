@@ -30,7 +30,7 @@ class PrankForm {
   description: string = "";
   email: string = "";
   // Captcha elements
-  weddingDate: string = `${Date.now()}`;
+  weddingDate: string = `${new Date().getTime()}`;
   superSecretCode: string = "";
 }
 
