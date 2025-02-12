@@ -30,8 +30,8 @@ class PrankForm {
   description: string = "";
   email: string = "";
   // Captcha elements
-  molesCount: string = "1337";
   weddingDate: string = `${Date.now()}`;
+  superSecretCode: string = "";
 }
 
 export default function Main(props: MainProps) {
@@ -129,15 +129,6 @@ export default function Main(props: MainProps) {
             onChange={handleInputChange}
           />
           <FormField
-            label="Numero di nei della vittima"
-            type="number"
-            name="molesCount"
-            value={prankForm.value.molesCount}
-            onChange={handleInputChange}
-            hidden
-            required
-          />
-          <FormField
             label="Città di nascita della vittima"
             type="text"
             name="victimBirthCity"
@@ -190,6 +181,14 @@ export default function Main(props: MainProps) {
             label="Descrizione dello scherzo"
             name="description"
             value={prankForm.value.description}
+            onChange={handleInputChange}
+            required
+          />
+          <FormField
+            label="Codice super super super super segreto"
+            type="text"
+            name="superSecretCode"
+            value={prankForm.value.superSecretCode}
             onChange={handleInputChange}
             required
           />

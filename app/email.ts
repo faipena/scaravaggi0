@@ -8,10 +8,10 @@ const SMTP_PASSWORD = Deno.env.get("SMTP_PASSWORD");
 const SMTP_FROM = Deno.env.get("SMTP_FROM");
 
 const CONFIRM_BASE_URL = "https://godzillaz.top/prank/confirm";
-const PRANKS_EMAIL = "scherzi@godzillaz.top"
+const PRANKS_EMAIL = "scherzi@godzillaz.top";
 
 function optional(value: unknown): string {
-  return value ? `${value}`: "-";
+  return value ? `${value}` : "-";
 }
 
 export default class Email {
@@ -67,7 +67,7 @@ Città di nascita della vittima: ${optional(prank.victimBirthCity)}
 Città attuale della vittima: ${optional(prank.victimCurrentCity)}
 Data di nascita della vittima: ${optional(prank.victimBirthDate)}
 Relazione con la vittima: ${optional(prank.relationship)}
-      `
-    )
+      `,
+    );
   }
 }

@@ -16,14 +16,34 @@ function optionalDate(value: string): Temporal.PlainDate | undefined {
   }
 }
 
+const LEET_ALPHABET: { [char: string]: string } = {
+  0: "o",
+  1: "i",
+  3: "e",
+  4: "a",
+  5: "s",
+  8: "b",
+};
+
+function leetCompare(input: string, value: string) {
+  return input.toLowerCase().split("").map((
+    value: string,
+  ) => (LEET_ALPHABET[value] ?? value)).join("") === value;
+}
+
 export const handler: Handlers<unknown, DatabaseState> = {
   async POST(req: Request, ctx: FreshContext<DatabaseState>) {
     try {
       const body = await req.json();
-      // TODO: captcha
+      const response = new Response(JSON.stringify({ "message": "ok" }));
       // TODO: rate limiting
       // TODO: validate data
-      const response = new Response(JSON.stringify({ "message": "ok" }));
+      if (
+        !leetCompare(body.superSecretCode, "coglione") &&
+        !leetCompare(body.superSecretCode, "loprendiinculo")
+      ) {
+        return response;
+      }
       console.log(body);
       const confirmationCode = await PranksTable.insertToBeConfirmed(ctx, {
         victimName: body.victimName,
