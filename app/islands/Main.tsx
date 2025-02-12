@@ -216,6 +216,12 @@ export default function Main(props: MainProps) {
             onChange={handleInputChange}
             hidden
           />
+          <FormField
+            label="Accetto i Termini e Condizioni di Utilizzo"
+            type="checkbox"
+            name="toc"
+            required
+          />
           <div class="flex justify-between">
             <Button
               type="button"
