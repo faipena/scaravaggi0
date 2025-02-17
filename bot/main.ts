@@ -43,7 +43,7 @@ async function onLiveStart(telegram: Telegram, chat: number) {
   try {
     const messageId = await telegram.sendPinnedMessage(
       chat,
-      "I GodzillaZ sono live! Seguili ora su twitch: https://twitch.tv/godzillaz_tv",
+      "Scaravaggi0 è live! Seguilo ora su twitch: https://twitch.tv/scaravaggi0",
     );
     const result = await db.get(["telegram", "pinnedMessages"]);
     const pinnedMessages: number[] = Array.isArray(result.value)

@@ -1,6 +1,6 @@
-# GodzillaZ bot
+# Twitch Bot
 
-Bot che notifica su un canale telegram che il miglior canale di twitch è online.
+Bot che notifica su un canale telegram che un canale di twitch è online. Il bot notifica anche il sito web che il canale è online tramite API REST.
 
 ## Funzionalità
 
@@ -21,7 +21,7 @@ della live.
 - Builda il Docker container:
 
 ```bash
-docker build . -t godzillaz-bot:latest
+docker build . -t scaravaggi0-bot:latest
 ```
 
 - Crea un file `.env.bot` contenente le seguenti variabili:
@@ -36,5 +36,5 @@ TW_CL13NT_S3CR3T=YOUR TWITCH CLIENT SECRET
 - Avvia il bot nel container:
 
 ```bash
-docker run --env-file .env.bot -it --rm godzillaz-bot
+docker run --env-file .env.bot -it --rm scaravaggi0-bot
 ```
