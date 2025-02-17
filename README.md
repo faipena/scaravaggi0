@@ -1,6 +1,6 @@
-# GodzillaZ.top
+# Scaravaggi0.top
 
-Monorepo contenente tutto il codice dei GodzillaZ. Ad oggi, il progetto è
+Monorepo contenente tutto il codice dello Scaravaggi0. Ad oggi, il progetto è
 suddiviso nei seguenti componenti:
 
 - **[app](./app)**: applicazione web Deno Fresh e Preact.
