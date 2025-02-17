@@ -1,6 +1,6 @@
 # Scaravaggi0.top
 
-Monorepo contenente tutto il codice dello Scaravaggi0. Ad oggi, il progetto è
+Monorepo contenente tutto il codice dello Scaravaggi0. È una fork del progetto GodzillaZ. Ad oggi, il progetto è
 suddiviso nei seguenti componenti:
 
 - **[app](./app)**: applicazione web Deno Fresh e Preact.
@@ -14,7 +14,7 @@ Il progetto utilizza [Docker Compose](./docker-compose.yaml) per il deploy. Lo
 sviluppo è aperto a chiunque, se vuoi aggiungere o modificare qualcosa apri una
 PR!
 
-![](./images/preview.png)
+<!-- ![](./images/preview.png) -->
 
 ---
 
