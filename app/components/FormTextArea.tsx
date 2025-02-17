@@ -24,6 +24,8 @@ export default function FormTextArea(props: FormTextAreaProps) {
         required={props.required}
         value={props.value}
         onChange={props.onChange}
+        minLength={100} // TODO: FIXME
+        maxLength={1500}
       />
     </div>
   );

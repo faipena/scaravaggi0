@@ -30,8 +30,8 @@ class PrankForm {
   description: string = "";
   email: string = "";
   // Captcha elements
-  molesCount: string = "1337";
-  weddingDate: string = `${Date.now()}`;
+  weddingDate: string = `${new Date().getTime()}`;
+  superSecretCode: string = "";
 }
 
 export default function Main(props: MainProps) {
@@ -129,15 +129,6 @@ export default function Main(props: MainProps) {
             onChange={handleInputChange}
           />
           <FormField
-            label="Numero di nei della vittima"
-            type="number"
-            name="molesCount"
-            value={prankForm.value.molesCount}
-            onChange={handleInputChange}
-            hidden
-            required
-          />
-          <FormField
             label="Città di nascita della vittima"
             type="text"
             name="victimBirthCity"
@@ -194,6 +185,14 @@ export default function Main(props: MainProps) {
             required
           />
           <FormField
+            label="Codice super super super super segreto"
+            type="text"
+            name="superSecretCode"
+            value={prankForm.value.superSecretCode}
+            onChange={handleInputChange}
+            required
+          />
+          <FormField
             label="Data di matrimonio"
             type="number"
             name="weddingDate"
@@ -216,6 +215,12 @@ export default function Main(props: MainProps) {
             value={prankForm.value.prankTypeId}
             onChange={handleInputChange}
             hidden
+          />
+          <FormField
+            label="Accetto i Termini e Condizioni di Utilizzo"
+            type="checkbox"
+            name="toc"
+            required
           />
           <div class="flex justify-between">
             <Button
